@@ -157,6 +157,29 @@ public:
     ~Management(){};
 };
 
+// //Librarian detail maps
+// unordered_map<string , string> Librarian_Name{
+//     {"1" , "JeffBezon"} , {"2" , "kimJong"}
+// };
+
+// unordered_map<string , string> Librarian_mail{
+//     {"1" , "bezos@kindle.com"} , {"2" , "kj@UN.com"}
+// };
+
+// //class Library
+// class Librarian{
+//     string id;
+//     string name;
+//     string email;
+// public:
+//     Librarian(string i);
+//     void showProfile();
+//     void issueBook();
+//     void LogOut();
+//     void Exit();
+//     int showMenu();
+//     ~Librarian(){};
+// };
 
 
 //main function
