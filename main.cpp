@@ -300,6 +300,8 @@ void student:: AssignmentCounter(){
 }
 
 void student::LogOut(){
+        cout<<"Logged Out"<<endl;
+    getch();
     main();
     Exit();
 }
@@ -430,6 +432,8 @@ void Teacher::AddAssignment(){
     TOTAL_ASSIGNMENT_COUNT[sem]+=val;
 }
 void Teacher::LogOut(){
+        cout<<"Logged Out"<<endl;
+    getch();
     main();
     Exit();
 }
@@ -537,13 +541,111 @@ void Management::DeleteStudent(){
         Student_sem.erase(S_ID);
         Student_mail.erase(S_ID);
         Student_AsCou.erase(S_ID);
+        cout<<"Deletion Successful"<<endl;
     }else{
-
+        cout<<"Student Don't exist"<<endl;
     }
 }
 
 void Management::UpdateStudentDetail(){
     //update student detail
+    cout<<"Enter details for student:"<<endl;
+    string S_id;
+    cout<<"Enter the Id for student to be updated"<<endl;
+    cin>>S_id;
+    if(Student_Name.find(S_id)==Student_Name.end()){
+        cout<<"Student not present"<<endl;
+        cout<<"Press 1 to add student"<<endl;
+        string s;
+        cin>>s;
+        if(s.size()==1 and s=="1"){
+            AddStudent();
+            return;
+        }else{
+            return;
+        }
+        return;
+    }else{
+        cout<<"choose the value to be edited:"<<endl;
+        cout<<"1. Password"<<endl;
+        cout<<"2. Name"<<endl;
+        cout<<"3. Father's Name"<<endl;
+        cout<<"4. Semester"<<endl;
+        cout<<"5. Email"<<endl;
+        cout<<"6. Assignment Count"<<endl;
+        string s;
+        cin>>s;
+        if(s.size()==1){
+            if(s=="1"){
+                cout<<"Enter new Password:"<<endl;
+                string a;
+                cin>>a;
+                Det[0][S_id] = a;
+                cout<<"Password updated successfully"<<endl;
+                return;
+            }else
+            if(s=="2"){
+                cout<<"Enter new Name:"<<endl;
+                string a;
+                cin>>a;
+                Student_Name[S_id] = a;
+                cout<<"Name updated successfully"<<endl;
+                return;
+            }else
+            if(s=="3"){
+                cout<<"Enter new Father's Name:"<<endl;
+                string a;
+                cin>>a;
+                Student_FName[S_id] = a;
+                cout<<"Father's Name updated successfully"<<endl;
+                return;
+
+            }else
+            if(s=="4"){
+                cout<<"Enter new semester:"<<endl;
+                string a;
+                cin>>a;
+                Student_sem[S_id] = a;
+                cout<<"semester updated successfully"<<endl;
+                return;
+                    
+            }else
+            if(s=="5"){
+                cout<<"Enter new Email:"<<endl;
+                string a;
+                cin>>a;
+                Student_mail[S_id] = a;
+                cout<<"Email updated successfully"<<endl;
+                return;
+
+            }else
+            if(s=="6"){
+                cout<<"Enter new count of assignment:"<<endl;
+                int a;
+                cin>>a;
+                Student_AsCou[S_id] = a;
+                cout<<"count updated successfully"<<endl;
+                return;
+                    
+            }else{
+                cout<<"Error! Try Again"<<endl;
+                return;
+            }
+            
+        }else{
+            cout<<"Try Again"<<endl;
+            return;
+        }
+    }
+    cout<<"Enter More students? press one for yes"<<endl;
+    string yes;
+    cin>>yes;
+    if(yes=="1"){
+        AddStudent();
+        return;
+    }else{
+        return;
+    }
 
 }
 void Management::AddStudent(){
@@ -582,12 +684,13 @@ void Management::AddStudent(){
         Student_sem.insert({S_id , Semester});
         Student_mail.insert({S_id , EmailId});
         Student_AsCou.insert({S_id , AssignmentC});
-    
+        cout<<"Insertion Successful"<<endl;
     }
     cout<<"Enter More students? press one for yes"<<endl;
     string yes;
     cin>>yes;
     if(yes=="1"){
+        AddStudent();
         return;
     }else{
         return;
@@ -595,6 +698,8 @@ void Management::AddStudent(){
 }
 
 void Management::LogOut(){
+    cout<<"Logged Out"<<endl;
+    getch();
     main();
     Exit();
 }
