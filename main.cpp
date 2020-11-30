@@ -166,6 +166,11 @@ unordered_map<string , string> Librarian_mail{
     {"1" , "bezos@kindle.com"} , {"2" , "kj@UN.com"}
 };
 
+unordered_map<string,string> studentIssued{{"1" , "1213"} , {"2" , "3123943"}};
+
+unordered_map<string , int> listOfBooks{{"1213" , 3} , {"3123943" , 23}};
+
+
 //class Library
 class Librarian{
     string id;
@@ -175,6 +180,9 @@ public:
     Librarian(string i);
     void showProfile();
     void issueBook();
+    void checkbook();
+    void returnbook();
+    void viewAllIssued();
     void LogOut();
     void Exit();
     int showMenu();
@@ -527,7 +535,7 @@ Management::Management(string i)
             case 2: AddStudent();break;
             case 3: UpdateStudentDetail();break;
             case 4: DeleteStudent();break;
-            //case 5: UploadTimeTable();break;
+            case 5: UploadTimeTable();break;
             case 6: LogOut();break;
             case 7: Exit();break;
             default : cout<<"couldn't identify"<<endl;
@@ -557,6 +565,11 @@ Management::Management(string i)
 
 }
 
+void Management:: UploadTimeTable(){
+    cout<<"This Feature is under construction"<<endl;
+    cout<<"Check back later"<<endl;
+    return;
+}
 void Management::DeleteStudent(){
     //delete student
     cout<<"Enter the Id to be deleted"<<endl;
@@ -743,7 +756,7 @@ int Management::showMenu(){
     cout<<"2. Add Student"<<endl;
     cout<<"3. Update Student Details"<<endl;
     cout<<"4. Delete Student"<<endl;
-    //cout<<"5. Mark Attendence"<<endl;
+    cout<<"5. Upload TimeTable"<<endl;
     cout<<"6. Log Out"<<endl;
     cout<<"7. Exit"<<endl;
     string s;
@@ -791,10 +804,10 @@ Librarian::Librarian(string i)
         int option = showMenu();
         switch(option){
             case 1: showProfile();break;
-            //case 2: issueBook();break;
-            //case 3: UpdateStudentDetail();break;
-            //case 4: DeleteStudent();break;
-            //case 5: UploadTimeTable();break;
+            case 2: issueBook();break;
+            case 3: checkbook();break;
+            case 4: returnbook();break;
+            case 5: viewAllIssued();break;
             case 6: LogOut();break;
             case 7: Exit();break;
             default : cout<<"couldn't identify"<<endl;
@@ -841,9 +854,9 @@ int Librarian::showMenu(){
     cout<<"Choose from these option:"<<endl;
     cout<<"1. showProfile"<<endl;
     cout<<"2. issueBook"<<endl;
-    //cout<<"3. Update Student Details"<<endl;
-    //cout<<"4. Delete Student"<<endl;
-    //cout<<"5. Mark Attendence"<<endl;
+    cout<<"3. Check book issued by ID"<<endl;
+    cout<<"4. Return book"<<endl;
+    cout<<"5. view all issued books"<<endl;
     cout<<"6. Log Out"<<endl;
     cout<<"7. Exit"<<endl;
     string s;
@@ -871,4 +884,78 @@ void Librarian::showProfile(){
         cout<<"Email:"<<email<<endl;
         cout<<"Role :"<<"Librarian"<<endl;
         getch();
+}
+
+
+//issueBook
+void Librarian::issueBook(){
+    cout<<"Enter the ISBN to be issued"<<endl;
+    string ISBN;
+    cin>>ISBN;
+    if(listOfBooks.find(ISBN)==listOfBooks.end() || listOfBooks[ISBN]==0){
+        cout<<"Book collection empty for this ISBN"<<endl;
+    }else{
+        cout<<"Enter Id of Student to issue book"<<endl;
+        string ID;
+        cin>>ID;
+        if(studentIssued.find(ID)!=studentIssued.end()){
+            cout<<"Only one book is permitted per student"<<endl;
+            cout<<"This student already has issued ISBN:"<<studentIssued[ID]<<endl;
+            cout<<"Book not issued"<<endl;
+            return;
+        }
+        studentIssued[ID]=ISBN;
+        listOfBooks[ISBN]--;
+        cout<<"Book issued!"<<endl;
+    }
+}
+
+
+//check which book 
+void Librarian::checkbook(){
+    cout<<"Enter the ID for which book is to be checked"<<endl;
+    string ID;
+    cin>>ID;
+    if(studentIssued.find(ID)==studentIssued.end()){
+        cout<<"No book issued by this student"<<endl;
+        return;
+    }else{
+        string a = studentIssued[ID];
+        cout<<"student "<<ID<<" issued ISBN: "<<a<<endl;
+        return;
+    }
+}
+
+//return book
+void Librarian::returnbook(){
+    cout<<"Enter the ID for which book is to be checked"<<endl;
+    string ID;
+    cin>>ID;
+    if(studentIssued.find(ID)==studentIssued.end()){
+        cout<<"No book issued by this student"<<endl;
+        return;
+    }else{
+        string a = studentIssued[ID];
+        cout<<"student "<<ID<<" issued ISBN: "<<a<<endl;
+        cout<<"press 1 to return:"<<endl;
+        string b;
+        cin>>b;
+        if(b=="1"){
+            studentIssued.erase(ID);
+            listOfBooks[a]++;
+            cout<<"book returned by the student successfully"<<endl;
+            return;
+        }
+        return;
+    }
+}
+
+//view all issued books
+void Librarian::viewAllIssued(){
+    system("CLS");
+    cout<<"All issued books:"<<endl;
+    for(auto c: studentIssued){
+        cout<<"ISBN : "<<c.second<<" \t issued by ID : "<<c.first<<endl;
+    }
+    return;
 }
