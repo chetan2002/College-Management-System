@@ -157,29 +157,29 @@ public:
     ~Management(){};
 };
 
-// //Librarian detail maps
-// unordered_map<string , string> Librarian_Name{
-//     {"1" , "JeffBezon"} , {"2" , "kimJong"}
-// };
+//Librarian detail maps
+unordered_map<string , string> Librarian_Name{
+    {"1" , "JeffBezon"} , {"2" , "kimJong"}
+};
 
-// unordered_map<string , string> Librarian_mail{
-//     {"1" , "bezos@kindle.com"} , {"2" , "kj@UN.com"}
-// };
+unordered_map<string , string> Librarian_mail{
+    {"1" , "bezos@kindle.com"} , {"2" , "kj@UN.com"}
+};
 
-// //class Library
-// class Librarian{
-//     string id;
-//     string name;
-//     string email;
-// public:
-//     Librarian(string i);
-//     void showProfile();
-//     void issueBook();
-//     void LogOut();
-//     void Exit();
-//     int showMenu();
-//     ~Librarian(){};
-// };
+//class Library
+class Librarian{
+    string id;
+    string name;
+    string email;
+public:
+    Librarian(string i);
+    void showProfile();
+    void issueBook();
+    void LogOut();
+    void Exit();
+    int showMenu();
+    ~Librarian(){};
+};
 
 
 //main function
@@ -205,10 +205,11 @@ int main(){
             if(userValue==3){
             /* code */
                 Management m1(USER_ID);
+            }else
+                if(userValue==4){
+                /* code */
+                    Librarian l1(USER_ID);
             }
-        
-    
-
     return 0;
 }
 
@@ -370,6 +371,8 @@ void student::showProfile(){
         cout<<"Fname:"<<Fname<<endl;
         cout<<"semester:"<<semester<<endl;
         cout<<"Email:"<<email<<endl;
+        cout<<"Role :"<<"Student"<<endl;
+
         getch();
 }
 
@@ -498,6 +501,8 @@ void Teacher::showProfile(){
         cout<<"ID:"<<id<<endl;
         cout<<"Name:"<<name<<endl;
         cout<<"Email:"<<email<<endl;
+        cout<<"Role :"<<"Teacher"<<endl;
+
         getch();
 }
 
@@ -764,5 +769,106 @@ void Management::showProfile(){
         cout<<"ID:"<<id<<endl;
         cout<<"Name:"<<name<<endl;
         cout<<"Email:"<<email<<endl;
+        cout<<"Role :"<<"Management"<<endl;
+
+        getch();
+}
+
+//Librarian
+
+//Librarian class
+//constructor Librarian
+Librarian::Librarian(string i)
+{
+    id = i;
+    name = Librarian_Name[i];
+    email = Librarian_mail[i];
+
+    //opens a display menu 
+    bool cont=false;
+    do{
+        system("CLS");
+        int option = showMenu();
+        switch(option){
+            case 1: showProfile();break;
+            //case 2: issueBook();break;
+            //case 3: UpdateStudentDetail();break;
+            //case 4: DeleteStudent();break;
+            //case 5: UploadTimeTable();break;
+            case 6: LogOut();break;
+            case 7: Exit();break;
+            default : cout<<"couldn't identify"<<endl;
+        }
+        cout<<"Enter 1 to continue"<<endl<<"Enter any other key to exit"<<endl;
+        string s;
+        cin>>s;
+        if(s.size()==1){
+            if(s[0]=='1'){
+                cont = true;
+            }else
+            {
+                cont = false;
+                Exit();
+                break;
+            }
+            
+        }else{
+            cont = false;
+            Exit();
+
+            break;
+        }
+
+    }while(cont);
+   
+
+}
+
+
+void Librarian::LogOut(){
+    cout<<"Logged Out"<<endl;
+    getch();
+    main();
+    Exit();
+}
+void Librarian::Exit(){
+    exitScreen();
+}
+
+//show menu function for Management
+int Librarian::showMenu(){
+    system("CLS");
+    cout<<"Choose from these option:"<<endl;
+    cout<<"1. showProfile"<<endl;
+    cout<<"2. issueBook"<<endl;
+    //cout<<"3. Update Student Details"<<endl;
+    //cout<<"4. Delete Student"<<endl;
+    //cout<<"5. Mark Attendence"<<endl;
+    cout<<"6. Log Out"<<endl;
+    cout<<"7. Exit"<<endl;
+    string s;
+    cin>>s;
+    int val=0;
+    if(s.size()==1){
+        val = stoi(s);
+        if(val>=1 and val<=7){
+            return val;
+        }else{
+            cout<<"Try Again"<<endl;
+            return showMenu();
+        }
+    }else{
+        cout<<"Try Again"<<endl;
+        return showMenu();
+    }
+    return val;
+}
+
+//show profile Librarian
+void Librarian::showProfile(){
+        cout<<"ID:"<<id<<endl;
+        cout<<"Name:"<<name<<endl;
+        cout<<"Email:"<<email<<endl;
+        cout<<"Role :"<<"Librarian"<<endl;
         getch();
 }
